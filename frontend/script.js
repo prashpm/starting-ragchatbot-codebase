@@ -15,14 +15,41 @@ document.addEventListener('DOMContentLoaded', () => {
     sendButton = document.getElementById('sendButton');
     totalCourses = document.getElementById('totalCourses');
     courseTitles = document.getElementById('courseTitles');
-    
+
+    initTheme();
     setupEventListeners();
     createNewSession();
     loadCourseStats();
 });
 
+// Theme Toggle
+function initTheme() {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light') document.body.classList.add('light');
+}
+
+function toggleTheme() {
+    const btn = document.getElementById('themeToggle');
+
+    document.body.classList.add('theme-transitioning');
+    document.body.classList.toggle('light');
+
+    btn.classList.add('just-toggled');
+    btn.setAttribute('aria-label',
+        document.body.classList.contains('light') ? 'Switch to dark mode' : 'Switch to light mode'
+    );
+
+    localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+
+    setTimeout(() => document.body.classList.remove('theme-transitioning'), 350);
+    setTimeout(() => btn.classList.remove('just-toggled'), 300);
+}
+
 // Event Listeners
 function setupEventListeners() {
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
     // Chat functionality
     sendButton.addEventListener('click', sendMessage);
     chatInput.addEventListener('keypress', (e) => {
