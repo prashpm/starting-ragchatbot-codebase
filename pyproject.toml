@@ -17,6 +17,8 @@ dependencies = [
 [dependency-groups]
 dev = [
     "black>=24.0.0",
+    "httpx>=0.28.1",
+    "pytest>=9.0.3",
 ]
 
 [tool.black]
